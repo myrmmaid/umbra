@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!--
+  ════════════════════════════════════════════════════════════════
+  PLANTILLA DE ARTÍCULO — UMBRA
+  Para crear un artículo nuevo:
+  1. Duplica este archivo y renómbralo (ej: articulo-la-torre.html)
+  2. Cambia el <title>
+  3. Cambia los datos en la zona "DATOS DEL ARTÍCULO" de abajo
+  4. Escribe tu contenido dentro de <div class="article-body">
+  ════════════════════════════════════════════════════════════════
+-->
+<title>Los Arcanos Mayores y las Heridas que No Sabías que Tenías — Umbra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#04010c;--deep:#0b0618;--void:#130a22;
+  --purple:#7c2fa0;--violet:#b76ef7;--lavender:#cc94ff;--lilac:#e2c4ff;
+  --silver:#cac6d8;--moonlight:#eee8f8;--white:#f9f5ff;
+  --glow:rgba(183,110,247,.45);
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--moonlight);font-family:'Nunito',sans-serif;font-weight:400;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cur{width:9px;height:9px;border-radius:50%;background:var(--lavender);position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:screen;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--violet),0 0 20px var(--glow);transition:transform .08s ease}
+body:has(a:hover) #cur,body:has(button:hover) #cur{transform:translate(-50%,-50%) scale(2);background:rgba(183,110,247,.6)}
+
+/* STARS */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");opacity:.32}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:linear-gradient(to bottom,rgba(4,1,12,.96),transparent);backdrop-filter:blur(4px)}
+.logo{font-family:'Cinzel Decorative',serif;font-size:1.25rem;letter-spacing:.18em;text-decoration:none;background:linear-gradient(120deg,var(--moonlight),var(--violet),var(--silver));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:2.4rem;list-style:none}
+.nav-links a{font-family:'Josefin Sans',sans-serif;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--silver);text-decoration:none;opacity:.65;transition:opacity .3s,color .3s}
+.nav-links a:hover{opacity:1;color:var(--lavender)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:300;background:none;border:none;padding:4px}
+.burger span{display:block;width:22px;height:1px;background:var(--silver);transition:all .35s}
+.burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ARTICLE LAYOUT */
+main{position:relative;z-index:2}
+
+/* Header del artículo */
+.article-header{
+  padding:11rem 0 5rem;
+  background:linear-gradient(to bottom,var(--black),var(--deep));
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.o1{width:400px;height:400px;top:-100px;left:-100px;background:radial-gradient(circle,rgba(124,47,160,.45),transparent 70%);animation:drift 14s ease-in-out infinite alternate}
+.o2{width:350px;height:350px;bottom:-80px;right:-80px;background:radial-gradient(circle,rgba(183,110,247,.3),transparent 70%);animation:drift 11s ease-in-out infinite alternate-reverse}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(30px,18px)}}
+
+.article-header .inner{position:relative;z-index:2}
+.article-tag{
+  font-family:'Josefin Sans',sans-serif;font-size:.58rem;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--violet);
+  display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;
+}
+.article-tag::before{content:'';display:block;width:36px;height:1px;background:var(--violet)}
+.article-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(1.6rem,4.5vw,3.2rem);
+  font-weight:400;line-height:1.2;
+  background:linear-gradient(140deg,var(--white),var(--lavender) 45%,var(--silver));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(183,110,247,.4));
+  max-width:800px;margin:0 auto 1.8rem;
+}
+.article-meta{
+  font-family:'Josefin Sans',sans-serif;font-size:.6rem;
+  letter-spacing:.22em;color:rgba(202,198,216,.45);
+  display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;
+}
+.article-meta span{display:flex;align-items:center;gap:.4rem}
+
+/* Línea divisora decorativa */
+.article-divider{
+  width:100%;height:1px;
+  background:linear-gradient(to right,transparent,rgba(124,47,160,.65),transparent);
+  position:relative;z-index:2;
+}
+
+/* Cuerpo del artículo */
+.article-wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:5rem 2.5rem 7rem;
+  position:relative;z-index:2;
+}
+
+/* Barra lateral decorativa */
+.article-wrap::before{
+  content:'';
+  position:absolute;
+  left:-1px;top:5rem;bottom:5rem;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(183,110,247,.25),transparent);
+}
+
+/* ESTILOS DE CONTENIDO DEL ARTÍCULO */
+/* Úsalos así dentro de .article-body:
+   <p>, <h2>, <h3>, <blockquote>, <ul>, <ol>, <hr class="section-break">
+*/
+.article-body p{
+  font-size:1.08rem;line-height:1.95;
+  color:var(--silver);margin-bottom:1.8rem;
+  font-weight:400;
+}
+.article-body p:first-child{
+  font-size:1.18rem;color:var(--moonlight);
+  font-style:italic;
+}
+.article-body h2{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:400;
+  background:linear-gradient(135deg,var(--white),var(--lavender));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin:3.5rem 0 1.2rem;line-height:1.3;
+}
+.article-body h3{
+  font-family:'Cinzel Decorative',serif;
+  font-size:1rem;font-weight:400;
+  color:var(--lavender);
+  margin:2.5rem 0 1rem;letter-spacing:.05em;
+}
+.article-body blockquote{
+  border-left:2px solid rgba(183,110,247,.45);
+  padding:1.2rem 1.8rem;
+  margin:2.5rem 0;
+  background:rgba(183,110,247,.05);
+  font-style:italic;font-size:1.1rem;
+  color:var(--lilac);line-height:1.85;
+}
+.article-body blockquote cite{
+  display:block;margin-top:.8rem;
+  font-family:'Josefin Sans',sans-serif;font-size:.58rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(202,198,216,.4);font-style:normal;
+}
+.article-body ul,.article-body ol{
+  padding-left:1.5rem;margin-bottom:1.8rem;
+}
+.article-body li{
+  font-size:1.05rem;color:var(--silver);
+  line-height:1.85;margin-bottom:.6rem;
+}
+.article-body ul li::marker{color:var(--violet)}
+.article-body ol li::marker{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.7rem;color:var(--violet);
+}
+.article-body em{color:var(--lilac);font-style:italic}
+.article-body strong{color:var(--moonlight);font-weight:600}
+.article-body a{
+  color:var(--violet);text-decoration:none;
+  border-bottom:1px solid rgba(183,110,247,.3);
+  transition:color .3s,border-color .3s;
+}
+.article-body a:hover{color:var(--lavender);border-color:var(--lavender)}
+
+/* Separador entre secciones */
+.section-break{
+  border:none;
+  text-align:center;
+  margin:3.5rem 0;
+  color:rgba(183,110,247,.45);
+  font-size:1rem;
+  letter-spacing:.8em;
+}
+.section-break::before{content:'✦  ✦  ✦'}
+
+/* Carta de tarot / elemento visual destacado */
+.highlight-box{
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(183,110,247,.2);
+  padding:2rem 2.5rem;
+  margin:2.5rem 0;
+  position:relative;
+}
+.highlight-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,var(--violet),transparent);
+}
+.highlight-box .box-title{
+  font-family:'Cinzel Decorative',serif;font-size:.85rem;
+  color:var(--lavender);margin-bottom:1rem;
+}
+.highlight-box p{margin-bottom:0!important;font-size:1rem!important}
+
+/* Navegación entre artículos */
+.article-nav{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.5rem;margin-top:5rem;
+  padding-top:3rem;
+  border-top:1px solid rgba(183,110,247,.12);
+}
+.art-nav-link{
+  text-decoration:none;padding:1.5rem;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(183,110,247,.1);
+  transition:background .3s,border-color .3s;
+}
+.art-nav-link:hover{background:rgba(183,110,247,.05);border-color:rgba(183,110,247,.35)}
+.art-nav-link .nav-dir{
+  font-family:'Josefin Sans',sans-serif;font-size:.52rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--violet);
+  opacity:.7;margin-bottom:.5rem;display:block;
+}
+.art-nav-link .nav-title{
+  font-family:'Cinzel Decorative',serif;font-size:.85rem;
+  color:var(--silver);line-height:1.4;
+}
+.art-nav-link.next{text-align:right}
+
+/* Back to blog */
+.back-link{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'Josefin Sans',sans-serif;font-size:.62rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:var(--silver);text-decoration:none;opacity:.55;
+  transition:opacity .3s,color .3s;margin-bottom:3rem;display:block;
+}
+.back-link:hover{opacity:1;color:var(--lavender)}
+.back-link::before{content:'← '}
+
+/* FOOTER */
+footer{position:relative;z-index:2;background:var(--black);padding:4rem 0 2rem;text-align:center;border-top:1px solid rgba(183,110,247,.1)}
+.foot-logo{font-family:'Cinzel Decorative',serif;font-size:1.4rem;background:linear-gradient(135deg,var(--moonlight),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;margin-bottom:1.6rem}
+.foot-links{display:flex;justify-content:center;gap:2.5rem;list-style:none;margin-bottom:2.5rem;flex-wrap:wrap}
+.foot-links a{font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--silver);text-decoration:none;opacity:.45;transition:opacity .3s,color .3s}
+.foot-links a:hover{opacity:1;color:var(--lavender)}
+.foot-copy{font-size:.78rem;color:rgba(202,198,216,.22);font-family:'Nunito',sans-serif;letter-spacing:.08em}
+.foot-sym{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.5rem;font-size:1.2rem;color:rgba(183,110,247,.38)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1.2rem 1.8rem}
+  .nav-links{position:fixed;inset:0;background:rgba(4,1,12,.97);flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;transform:translateX(100%);transition:transform .45s cubic-bezier(.23,1,.32,1);backdrop-filter:blur(12px);z-index:250}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:.9rem;opacity:1}
+  .burger{display:flex}
+  .article-nav{grid-template-columns:1fr}
+  .article-wrap::before{display:none}
+}
+@media(max-width:520px){
+  .article-wrap{padding:4rem 1.4rem 6rem}
+  .article-nav{grid-template-columns:1fr}
+  .art-nav-link.next{text-align:left}
+  #cur{display:none}
+  body{cursor:auto}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<canvas id="stars"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Umbra</a>
+  <button class="burger" id="burger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#luna">Luna</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#nl">Círculo</a></li>
+  </ul>
+</nav>
+
+<main>
+  <!-- ══════════════════════════════════════════════════════
+       DATOS DEL ARTÍCULO — edita esto para cada artículo
+  ══════════════════════════════════════════════════════ -->
+  <div class="article-header">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="inner">
+      <!-- CATEGORÍA -->
+      <span class="article-tag">Tarot</span>
+      <!-- TÍTULO -->
+      <h1 class="article-title">Los Arcanos Mayores y las Heridas que No Sabías que Tenías</h1>
+      <!-- FECHA · TIEMPO DE LECTURA -->
+      <div class="article-meta">
+        <span>14 de Febrero, 2025</span>
+        <span>·</span>
+        <span>8 min de lectura</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       CONTENIDO DEL ARTÍCULO
+       Escribe aquí libremente usando:
+         <p>párrafo</p>
+         <h2>título de sección</h2>
+         <h3>subtítulo</h3>
+         <blockquote>cita<cite>— fuente</cite></blockquote>
+         <ul><li>elemento</li></ul>
+         <hr class="section-break">
+         <div class="highlight-box"><p class="box-title">Título</p><p>texto</p></div>
+  ══════════════════════════════════════════════════════ -->
+  <div class="article-wrap">
+    <a href="blog.html" class="back-link">Volver al Libro de Sombras</a>
+
+    <div class="article-body">
+
+      <p>El tarot no llegó a mi vida para predecirme el futuro. Llegó para mostrarme todo aquello que llevaba años negando. Y la primera vez que saqué La Torre en una tirada, entendí que las cartas no mienten — solo dicen lo que tú todavía no estás lista para escuchar.</p>
+
+      <p>Los 22 arcanos mayores no son símbolos arbitrarios. Son un mapa de la psique humana, trazado hace siglos por personas que entendían que el mayor viaje no ocurre afuera, sino en la arquitectura invisible de quien somos. Cada carta corresponde a una energía, sí, pero también a una herida. A una parte de nosotras que, en algún momento, decidió esconderse.</p>
+
+      <h2>El Mapa que Nadie Te Enseñó a Leer</h2>
+
+      <p>Cuando empecé a estudiar el tarot en serio, me llamó la atención que los arcanos mayores siempre se presentan como un <em>viaje</em>. El Loco que empieza sin miedo. El Mago que descubre su poder. La Sacerdotisa que guarda secretos. La Emperatriz que florece. Y así, carta a carta, hasta El Mundo: la integración total.</p>
+
+      <p>Pero lo que nadie te cuenta es que ese viaje no es lineal. No llegas a El Mundo y ya está. Vuelves. Empiezas de nuevo. Algunos arcanos te persiguen durante años porque representan exactamente aquello que todavía no has resuelto en ti misma.</p>
+
+      <blockquote>
+        Las cartas no predicen lo que pasará. Reflejan lo que ya está pasando, dentro de ti, en el nivel donde aún no tienes palabras para nombrarlo.
+        <cite>— Reflexión personal</cite>
+      </blockquote>
+
+      <h2>Las Heridas Detrás de las Cartas</h2>
+
+      <p>Aquí es donde se pone interesante. Cada arcano mayor tiene una cara luminosa y una sombra. Y esa sombra casi siempre corresponde a una herida que reconocerás.</p>
+
+      <h3>La Sacerdotisa — La herida del conocimiento negado</h3>
+
+      <p>Si esta carta aparece repetidamente en tus tiradas, especialmente invertida, suele señalar que llevas tiempo ignorando tu intuición. Sabes cosas. Las sientes. Pero las racionalizas, las descartas, las llamas <em>exageradas</em>. La Sacerdotisa te pregunta: ¿cuántas veces ya lo sabías, y elegiste no saber?</p>
+
+      <div class="highlight-box">
+        <p class="box-title">✦ &nbsp; Pregunta para tu diario</p>
+        <p>¿Qué es lo que llevas meses sabiendo, pero todavía no estás lista para admitir en voz alta?</p>
+      </div>
+
+      <h3>La Torre — La herida del control</h3>
+
+      <p>La carta más temida. La que hace que la gente cierre los ojos cuando aparece. Pero La Torre no viene a destruirte — viene a derrumbar lo que tú misma construiste sobre cimientos falsos. El dolor de La Torre es proporcional a cuánto tiempo llevas manteniendo algo en pie que ya debería haber caído.</p>
+
+      <h3>El Colgado — La herida de la rendición</h3>
+
+      <p>Hay personas que pasan años intentando resolver, actuar, forzar. El Colgado les dice que el camino es <em>soltar</em>. No porque la situación no importe, sino porque algunas cosas solo se resuelven cuando dejas de intentar controlarlas. Es una de las lecciones más difíciles, y también una de las más transformadoras.</p>
+
+      <hr class="section-break">
+
+      <h2>Cómo Trabajar con Estas Energías</h2>
+
+      <p>No se trata de temer las cartas "difíciles". Se trata de entender que cada arcano que se repite en tus tiradas está intentando decirte algo. Una práctica sencilla es esta:</p>
+
+      <ul>
+        <li>Saca una carta al azar antes de dormir y pregúntate: <em>¿qué parte de mí refleja esta carta hoy?</em></li>
+        <li>Anota sin juzgar. No busques la interpretación del libro. Busca la tuya.</li>
+        <li>Si una carta aparece tres veces o más en un mes, siéntate con ella. Es tu mensaje.</li>
+        <li>Trabaja la sombra de esa carta, no solo su aspecto luminoso.</li>
+      </ul>
+
+      <p>El tarot es, en última instancia, una conversación contigo misma. Las cartas no tienen poder propio. El poder siempre fue tuyo. Ellas solo sostienen el espejo.</p>
+
+      <blockquote>
+        No necesitas creer en el tarot para que funcione. Solo necesitas estar dispuesta a mirarte con honestidad.
+      </blockquote>
+
+    </div>
+    <!-- FIN article-body -->
+
+    <!-- Navegación entre artículos — cambia los href y textos -->
+    <nav class="article-nav">
+      <a href="blog.html" class="art-nav-link prev">
+        <span class="nav-dir">← Anterior</span>
+        <span class="nav-title">Volver al Libro de Sombras</span>
+      </a>
+      <a href="articulo-luna-llena.html" class="art-nav-link next">
+        <span class="nav-dir">Siguiente →</span>
+        <span class="nav-title">Por Qué la Luna Llena Te Desestabiliza</span>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="inner" style="max-width:1100px;margin:0 auto;padding:0 2.5rem">
+    <div class="foot-sym"><span>☽</span><span>✦</span><span>☾</span></div>
+    <div class="foot-logo">Umbra</div>
+    <ul class="foot-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#luna">Luna</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#">Sobre mí</a></li>
+    </ul>
+    <p class="foot-copy">© 2025 Umbra — Santuario de lo Etéreo</p>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`});
+
+// STARS
+(function(){
+  const c=document.getElementById('stars'),ctx=c.getContext('2d');
+  let W,H,stars=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  function mk(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*.9+.2,a:Math.random(),da:(Math.random()-.5)*.004,dx:(Math.random()-.5)*.04,dy:(Math.random()-.5)*.04}}
+  for(let i=0;i<280;i++)stars.push(mk());
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.a+=s.da;if(s.a>1||s.a<0)s.da*=-1;
+      s.x+=s.dx;s.y+=s.dy;
+      if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(210,195,220,${s.a*.7})`;ctx.fill();
+    });
+    stars.slice(0,60).forEach(s=>{
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r*.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(183,110,247,${s.a*.45})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  })();
+})();
+
+// BURGER
+const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');navLinks.classList.toggle('open')});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');navLinks.classList.remove('open')}));
+</script>
+</body>
+</html>
